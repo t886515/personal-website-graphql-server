@@ -8,7 +8,7 @@ const {
 
 const dialogueTitle = '[Save]';
 
-const x = pipe('=');
+const x = pipe(getParams, saveTodo);
 x()
   .then(() => {
     Mongoose.disconnect();
