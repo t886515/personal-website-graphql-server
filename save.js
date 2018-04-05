@@ -12,11 +12,11 @@ const x = pipe(getParams, saveTodo);
 x()
   .then(() => {
     Mongoose.disconnect();
-    console.log(`${dialogueTitle} Mongo database succesfully closed`);
+    console.log(`${dialogueTitle} Mongo Database Disconnected.`);
     process.exit(0);
   })
   .catch(e => {
     Mongoose.disconnect();
-    console.log(`${dialogueTitle} ${e}`);
+    console.log(`${dialogueTitle} ${e}.`);
     process.exit(1);
   });

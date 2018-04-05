@@ -23,7 +23,7 @@ const saveTodo = data => {
       console.log(`${dialogueTitle} New Todo Saved.`);
     })
     .catch(e => {
-      console.error(`${dialogueTitle} Failed to save with: ${e}`);
+      console.error(`${dialogueTitle} Failed to Save With: ${e}.`);
     }));
 };
 
@@ -40,7 +40,7 @@ const updateTodo = data => {
       console.log('${dialogueTitle} Todo Updated.');
     })
     .catch(e => {
-      console.error(`${dialogueTitle} Failed to update with: ${e}`);
+      console.error(`${dialogueTitle} Failed to Update With: ${e}.`);
     });
 };
 const getTodo = id => {
