@@ -6,16 +6,17 @@ const {
   getTodo
 } = require('./graphql/database-query.js');
 
-const x = pipe(getParams, saveTodo);
+const dialogueTitle = '[Save]';
 
+const x = pipe('=');
 x()
   .then(() => {
     Mongoose.disconnect();
-    console.log(`Mongo database succesfully closed`);
+    console.log(`${dialogueTitle} Mongo database succesfully closed`);
     process.exit(0);
   })
   .catch(e => {
     Mongoose.disconnect();
-    console.log(`[Something went wrong]: ${e}`);
+    console.log(`${dialogueTitle} ${e}`);
     process.exit(1);
   });

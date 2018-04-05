@@ -2,44 +2,45 @@ const { ToDoModel } = require('../database/connector.js');
 const Mongoose = require('mongoose');
 const moment = require('moment');
 
+const dialogueTitle = '[Mongo Query]';
+
 const saveTodo = data => {
-  console.log(data);
-  try {
-    const { value, notes, isComplete } = data;
-  } catch (e) {
-    console.error(`Data passed down is missing prop: ${e}`);
-  }
-  const createDate = moment().format('MMMM Do YYYY, h:mm:ss a');
-  let newTodoEntry = new ToDoModel({
+  const { value, notes, isComplete } = data;
+  const _createDate = moment();
+  const createDate = _createDate.format('MMMM Do YYYY, h:mm:ss a');
+
+  return (newTodoEntry = new ToDoModel({
     value,
     notes,
     isComplete,
     createDate,
-    updateDate: createDate
+    _createDate,
+    updateDate: createDate,
+    _updateDate: _createDate
   })
     .save()
     .then(() => {
-      console.log('[Todo entry saved]');
+      console.log(`${dialogueTitle} New Todo Saved.`);
     })
     .catch(e => {
-      console.error(`[Save Failed] ${e}`);
-    });
+      console.error(`${dialogueTitle} Failed to save with: ${e}`);
+    }));
 };
 
 const updateTodo = data => {
-  try {
-    const { id, value, notes, isComplete } = data;
-  } catch (e) {
-    console.error(`Data passed down is missing prop: ${e}`);
-  }
-  const updateDate = moment().format('MMMM Do YYYY, h:mm:ss a');
+  const { id, value, notes, isComplete } = data;
+  const _updateDate = moment();
+  const updateDate = _updateDate.format('MMMM Do YYYY, h:mm:ss a');
 
-  ToDoModel.update({ _id: id }, { value, notes, isComplete, updateDate })
+  return ToDoModel.update(
+    { _id: id },
+    { value, notes, isComplete, updateDate, _updateDate }
+  )
     .then(() => {
-      console.log('[Todo entry updated]');
+      console.log('${dialogueTitle} Todo Updated.');
     })
     .catch(e => {
-      console.error(`[Update Failed] ${e}`);
+      console.error(`${dialogueTitle} Failed to update with: ${e}`);
     });
 };
 const getTodo = id => {

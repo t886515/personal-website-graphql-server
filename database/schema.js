@@ -6,8 +6,10 @@ const ToDoSchema = new Schema({
   value: String,
   notes: String,
   isComplete: Boolean,
-  createDate: Date,
-  updateDate: Date
+  createDate: String,
+  _createDate: Date,
+  updateDate: String,
+  _updateDate: Date
 });
 
 module.exports = {
