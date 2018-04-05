@@ -17,6 +17,24 @@ type Todo {
   updateDate: String
 }
 
+type Mutation {
+  createTodo(input:CreateTodoInput): String
+  updateTodo(id:String!, input:UpdateTodoInput): String
+}
+
+type CreateTodoInput {
+  value: String
+  notes: String
+  isCompete: Boolean
+}
+
+type UpdateTodoInput {
+  id: String
+  value: String
+  notes: String
+  isComplete: Boolean
+}
+
 `;
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });

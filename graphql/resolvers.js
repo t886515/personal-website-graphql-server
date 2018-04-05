@@ -1,4 +1,4 @@
-const { getTodo } = require('./database-query.js');
+const { getTodo, saveTodo, updateTodo } = require('./database-query.js');
 
 const resolvers = {
   Query: {
@@ -29,8 +29,29 @@ const resolvers = {
     updateDate: obj => {
       return obj.updateDate;
     }
+  },
+  Mutation: {
+    createTodo: (obj, arg) => {
+      if (arg.input) {
+        saveTodo(arg.input);
+        return `Todo Saved.`;
+      } else {
+        return `Input Not Found.`;
+      }
+    },
+    updateTodo: (obj, arg) => {
+      if (arg.input) {
+        updateTodo(arg.input);
+        return `Todo Updated.`;
+      } else {
+        return `Input Not Found.`;
+      }
+    }
   }
-  // Mutation: {}
+  // CreateTodoInput: {
+  //   value:
+  // },
+  // UpdateTodoInput: {}
 };
 
 module.exports = resolvers;
