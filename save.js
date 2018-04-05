@@ -8,7 +8,7 @@ const {
 
 const dialogueTitle = '[Save]';
 
-const x = pipe(getParams, saveTodo);
+const x = pipe(getParams, updateTodo);
 x()
   .then(() => {
     Mongoose.disconnect();
@@ -17,6 +17,6 @@ x()
   })
   .catch(e => {
     Mongoose.disconnect();
-    console.log(`${dialogueTitle} ${e}.`);
+    console.error(`${dialogueTitle} ${e}.`);
     process.exit(1);
   });

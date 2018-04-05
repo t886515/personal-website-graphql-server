@@ -2,6 +2,7 @@ const shellargs = require('minimist')(process.argv.slice(2));
 
 module.exports = () => {
   const data = {
+    id: shellargs.id,
     value: shellargs.value,
     notes: shellargs.notes,
     isComplete: shellargs.isComplete

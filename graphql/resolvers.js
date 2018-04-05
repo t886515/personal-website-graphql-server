@@ -2,19 +2,17 @@ const { getTodo } = require('./database-query.js');
 
 const resolvers = {
   Query: {
-    Todos: async (obj, arg) => {
+    Todos: (obj, arg) => {
       if (arg.id) {
-        let todos = getTodo(arg.id);
-        return [todos];
+        return getTodo(arg.id);
       } else {
-        let todos = getTodo();
-        return [todos];
+        return getTodo();
       }
     }
   },
   Todo: {
     id: obj => {
-      return obj.id;
+      return obj._id;
     },
     value: obj => {
       return obj.value;
@@ -32,6 +30,7 @@ const resolvers = {
       return obj.updateDate;
     }
   }
+  // Mutation: {}
 };
 
 module.exports = resolvers;

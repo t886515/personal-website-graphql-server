@@ -37,7 +37,7 @@ const updateTodo = data => {
     { value, notes, isComplete, updateDate, _updateDate }
   )
     .then(() => {
-      console.log('${dialogueTitle} Todo Updated.');
+      console.log(`${dialogueTitle} Todo Updated.`);
     })
     .catch(e => {
       console.error(`${dialogueTitle} Failed to Update With: ${e}.`);
