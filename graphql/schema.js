@@ -18,22 +18,17 @@ type Todo {
 }
 
 type Mutation {
-  createTodo(input:CreateTodoInput): String
-  updateTodo(id:String!, input:UpdateTodoInput): String
+  createTodo(input:TodoInput): Todo
+  updateTodo(id:String!, input:TodoInput): Todo
+  removeTodo(id:String!): String
 }
 
-type CreateTodoInput {
-  value: String
-  notes: String
-  isCompete: Boolean
-}
-
-type UpdateTodoInput {
-  id: String
+input TodoInput {
   value: String
   notes: String
   isComplete: Boolean
 }
+
 
 `;
 

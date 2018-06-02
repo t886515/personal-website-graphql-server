@@ -16,36 +16,49 @@ const saveTodo = data => {
     createDate,
     _createDate,
     updateDate: createDate,
-    _updateDate: _createDate
+    _updateDate: _createDate,
   })
     .save()
-    .then(() => {
+    .then(createdTodo => {
       console.log(`${dialogueTitle} New Todo Saved.`);
+      return createdTodo;
     })
     .catch(e => {
       console.error(`${dialogueTitle} Failed to Save With: ${e}.`);
     }));
 };
 
-const updateTodo = data => {
-  const { id, value, notes, isComplete } = data;
+const updateTodo = (id, data) => {
+  const { value, notes, isComplete } = data;
   const _updateDate = moment();
   const updateDate = _updateDate.format('MMMM Do YYYY, h:mm:ss a');
 
   return ToDoModel.update(
     { _id: id },
-    { value, notes, isComplete, updateDate, _updateDate }
+    { value, notes, isComplete, updateDate, _updateDate },
   )
-    .then(() => {
+    .then(updatedTodo => {
       console.log(`${dialogueTitle} Todo Updated.`);
     })
     .catch(e => {
       console.error(`${dialogueTitle} Failed to Update With: ${e}.`);
     });
 };
+
+//Add error handler for these steps
+const removeTodo = id => {
+  return ToDoModel.remove({ _id: id })
+    .then(deleted => {
+      console.log(`${dialogueTitle} Todo removed.`);
+    })
+    .catch(e => {
+      console.log(`${dialogueTitle} Failed to Delete With: ${e}.`);
+    });
+};
+
 const getTodo = id => {
   if (id) {
-    return ToDoModel.find({ id }).lean();
+    return ToDoModel.find({ _id: id }).lean();
   } else {
     return ToDoModel.find({}).lean();
   }
@@ -54,5 +67,6 @@ const getTodo = id => {
 module.exports = {
   saveTodo,
   updateTodo,
-  getTodo
+  getTodo,
+  removeTodo,
 };

@@ -1,4 +1,9 @@
-const { getTodo, saveTodo, updateTodo } = require('./database-query.js');
+const {
+  getTodo,
+  saveTodo,
+  updateTodo,
+  removeTodo,
+} = require('./database-query.js');
 
 const resolvers = {
   Query: {
@@ -8,50 +13,30 @@ const resolvers = {
       } else {
         return getTodo();
       }
-    }
+    },
   },
   Todo: {
     id: obj => {
       return obj._id;
     },
-    value: obj => {
-      return obj.value;
-    },
-    notes: obj => {
-      return obj.notes;
-    },
-    isComplete: obj => {
-      return obj.isComplete;
-    },
-    createDate: obj => {
-      return obj.createDate;
-    },
-    updateDate: obj => {
-      return obj.updateDate;
-    }
   },
   Mutation: {
-    createTodo: (obj, arg) => {
+    createTodo: async (obj, arg) => {
       if (arg.input) {
-        saveTodo(arg.input);
-        return `Todo Saved.`;
+        return await saveTodo(arg.input);
       } else {
         return `Input Not Found.`;
       }
     },
     updateTodo: (obj, arg) => {
-      if (arg.input) {
-        updateTodo(arg.input);
-        return `Todo Updated.`;
-      } else {
-        return `Input Not Found.`;
-      }
-    }
-  }
-  // CreateTodoInput: {
-  //   value:
-  // },
-  // UpdateTodoInput: {}
+      updateTodo(arg.id, arg.input);
+      return `Todo with id ${arg.id} updated.`;
+    },
+    removeTodo: (obj, arg) => {
+      removeTodo(arg.id);
+      return `Todo with id ${arg.id} removed.`;
+    },
+  },
 };
 
 module.exports = resolvers;
