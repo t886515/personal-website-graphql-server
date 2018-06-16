@@ -1,72 +1,74 @@
-const { ToDoModel } = require('../database/connector.js');
+const { JournalModel } = require('../database/connector.js');
 const Mongoose = require('mongoose');
 const moment = require('moment');
 
 const dialogueTitle = '[Mongo Query]';
 
-const saveTodo = data => {
-  const { value, notes, isComplete } = data;
-  const _createDate = moment();
-  const createDate = _createDate.format('MMMM Do YYYY, h:mm:ss a');
+const saveJournal = journalData => {
+  const {
+    title = 'Empty Title',
+    author = 'Unknown Author',
+    content = 'N/A',
+    isPrivate = false,
+  } = journalData;
+  const createDate = moment();
 
-  return (newTodoEntry = new ToDoModel({
-    value,
-    notes,
-    isComplete,
+  return (newJournalEntry = new JournalModel({
+    title,
+    author,
+    content,
+    isPrivate,
     createDate,
-    _createDate,
     updateDate: createDate,
-    _updateDate: _createDate,
+    comments: [],
   })
     .save()
-    .then(createdTodo => {
-      console.log(`${dialogueTitle} New Todo Saved.`);
-      return createdTodo;
+    .then(createdJournal => {
+      console.log(`${dialogueTitle} New Journal Saved.`);
+      return createdJournal;
     })
     .catch(e => {
-      console.error(`${dialogueTitle} Failed to Save With: ${e}.`);
+      console.error(`${dialogueTitle} Failed to Save Journal With: ${e}.`);
     }));
 };
 
-const updateTodo = (id, data) => {
-  const { value, notes, isComplete } = data;
-  const _updateDate = moment();
-  const updateDate = _updateDate.format('MMMM Do YYYY, h:mm:ss a');
+const updateJournal = (id, journalData) => {
+  const { title, author, content, isPrivate } = journalData;
+  const updateDate = moment();
 
-  return ToDoModel.update(
+  return JournalModel.update(
     { _id: id },
-    { value, notes, isComplete, updateDate, _updateDate },
+    { title, author, content, isPrivate, updateDate },
   )
-    .then(updatedTodo => {
-      console.log(`${dialogueTitle} Todo Updated.`);
+    .then(updatedJournal => {
+      console.log(`${dialogueTitle} Journal Updated.`);
     })
     .catch(e => {
-      console.error(`${dialogueTitle} Failed to Update With: ${e}.`);
+      console.error(`${dialogueTitle} Failed to Update Journal With: ${e}.`);
     });
 };
 
-//Add error handler for these steps
-const removeTodo = id => {
-  return ToDoModel.remove({ _id: id })
+const removeJournal = id => {
+  return JournalModel.remove({ _id: id })
     .then(deleted => {
-      console.log(`${dialogueTitle} Todo removed.`);
+      console.log(`${dialogueTitle} Journal ${id} removed.`);
     })
     .catch(e => {
-      console.log(`${dialogueTitle} Failed to Delete With: ${e}.`);
+      console.log(`${dialogueTitle} Failed to Delete Journal With: ${e}.`);
     });
 };
 
-const getTodo = id => {
+const getJournal = id => {
   if (id) {
-    return ToDoModel.find({ _id: id }).lean();
+    return JournalModel.find({ _id: id }).lean();
   } else {
-    return ToDoModel.find({}).lean();
+    return JournalModel.find({}).lean();
   }
 };
 
 module.exports = {
-  saveTodo,
-  updateTodo,
-  getTodo,
-  removeTodo,
+  saveJournal,
+  updateJournal,
+  getJournal,
+  removeJournal,
 };

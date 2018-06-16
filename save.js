@@ -1,14 +1,18 @@
 const Mongoose = require('mongoose');
 const { pipe, getParams } = require('./helper');
 const {
-  saveTodo,
-  updateTodo,
-  getTodo
+  saveJournal,
+  updateJournal,
+  getJournal,
+  removeJournal,
 } = require('./graphql/database-query.js');
 
 const dialogueTitle = '[Save]';
 
-const x = pipe(getParams, updateTodo);
+const x = pipe(
+  getParams,
+  updateJournal,
+);
 x()
   .then(() => {
     Mongoose.disconnect();

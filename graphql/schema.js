@@ -5,30 +5,43 @@ const resolvers = require('./resolvers.js');
 const typeDefs = `
 
 type Query {
-  Todos(id:String): [Todo]
+  Journals(id:String): [Journal]
+  Comments(id:String): [Comment]
 }
 
-type Todo {
-  id: String
-  value: String
-  notes: String
-  isComplete: Boolean
+type Journal {
+  id: ID
+  title: String
+  author: String
+  content: String
   createDate: String
   updateDate: String
+  isPrivate: Boolean
+  comments: [Comment]
+}
+
+type Comment {
+  id: ID
+  title: String,
+  author: String,
+  content: String,
+  createDate: String,
+  updateDate: String,
+  isPrivate: Boolean,
 }
 
 type Mutation {
-  createTodo(input:TodoInput): Todo
-  updateTodo(id:String!, input:TodoInput): Todo
-  removeTodo(id:String!): String
+  CreateJournal(input:JournalInput): Journal
+  UpdateJournal(id:String!, input:JournalInput): String
+  RemoveJournal(id:String!): String
 }
 
-input TodoInput {
-  value: String
-  notes: String
-  isComplete: Boolean
+input JournalInput {
+  title: String
+  author: String
+  content: String
+  isPrivate: Boolean
 }
-
 
 `;
 

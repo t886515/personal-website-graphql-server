@@ -1,39 +1,39 @@
 const {
-  getTodo,
-  saveTodo,
-  updateTodo,
-  removeTodo,
+  saveJournal,
+  updateJournal,
+  getJournal,
+  removeJournal,
 } = require('./database-query.js');
 
 const resolvers = {
   Query: {
-    Todos: (obj, arg) => {
+    Journals: (obj, arg) => {
       if (arg.id) {
-        return getTodo(arg.id);
+        return getJournal(arg.id);
       } else {
-        return getTodo();
+        return getJournal();
       }
     },
   },
-  Todo: {
+  Journal: {
     id: obj => {
       return obj._id;
     },
   },
   Mutation: {
-    createTodo: async (obj, arg) => {
+    CreateJournal: async (obj, arg) => {
       if (arg.input) {
-        return await saveTodo(arg.input);
+        return await saveJournal(arg.input);
       } else {
         return `Input Not Found.`;
       }
     },
-    updateTodo: (obj, arg) => {
-      updateTodo(arg.id, arg.input);
+    UpdateJournal: (obj, arg) => {
+      updateJournal(arg.id, arg.input);
       return `Todo with id ${arg.id} updated.`;
     },
-    removeTodo: (obj, arg) => {
-      removeTodo(arg.id);
+    RemoveJournal: (obj, arg) => {
+      removeJournal(arg.id);
       return `Todo with id ${arg.id} removed.`;
     },
   },
